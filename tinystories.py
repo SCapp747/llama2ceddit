@@ -80,7 +80,8 @@ def train_vocab(vocab_size):
     prefix = os.path.join(DATA_CACHE_DIR, f"tok{vocab_size}")
 
     # how many shards we'll use for vocab training, kept low for efficiency
-    num_shards = 10
+    num_shards = 3
+    # my shards are ~ 100mb so three will do
 
     # 1) export a large chunk of text as a single text file tiny.txt
     tiny_file = os.path.join(DATA_CACHE_DIR, "tiny.txt")
@@ -113,12 +114,12 @@ def train_vocab(vocab_size):
                                    byte_fallback=True,
                                    unk_surface=r" \342\201\207 ",
                                    normalization_rule_name="identity")
-
+    # Commented out this section as it can cause issues when running on google colab / jupyter notebook
     # 3) optional cleanup, ask the user if they'd like to delete tiny.txt
-    dec = input(f"Delete the temporary file {tiny_file}? [y/N] ")
-    if dec.lower() == "y":
-        os.remove(tiny_file)
-        print(f"Deleted {tiny_file}")
+    #dec = input(f"Delete the temporary file {tiny_file}? [y/N] ")
+    #if dec.lower() == "y":
+    #    os.remove(tiny_file)
+    #    print(f"Deleted {tiny_file}")
 
     print(f"Trained tokenizer is in {prefix}.model")
     print("Done.")
