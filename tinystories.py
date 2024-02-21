@@ -132,7 +132,7 @@ def process_shard(args, vocab_size):
     with open(shard, "r") as f:
         data = json.load(f)
     all_tokens = []
-    for example in tqdm(data, position=shard_id):
+    for example in data:
         text = example["story"]
         text = text.strip()  # get rid of leading/trailing whitespace
         tokens = enc.encode(text, bos=True, eos=False)  # encode the text, use BOS
